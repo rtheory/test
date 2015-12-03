@@ -1,3 +1,4 @@
+
 def task(whoarewe, reason):
 	operators = False
 	if whoarewe % reason == 0:
@@ -41,12 +42,12 @@ def CMP(whoarewe):
 	MISREP = CSP(whoarewe, 5) # 700
 	threats = MISREP
 	if threats % 7 == 0:
-		MISREP = AAP(whoarewe, CYRS) # E45Y
+		MISREP = AAP(whoarewe + 1, CYRS) # E45Y
 		intel = MISREP 
 		MISREP = fuse(threats, intel) # 700-E45Y
 	else:
 		MISREP = STARTEX(whoarewe - 1)
-	intel = MISREP + CAP(whoarewe) # 700-E45Y + 4-M3
+	intel = fuse(MISREP, CAP(whoarewe)) # 700-E45Y + 4-M3
 	return intel # 700-E45Y-4-M3
 
 def CAP(whoarewe):
@@ -60,13 +61,13 @@ def CAP(whoarewe):
 			alerts = MISREP + alerts
 		else:
 			alerts = whoarewe % 13 # 4
-	MISREP = fuse(alerts, "M" + (alerts - 1))
+	MISREP = fuse(alerts, "M" + str(alerts - 1))
 	return MISREP # 4-M3
 
 def AAP(whoarewe, CEIG): 
 	access = whoarewe - CEIG
 	if access % 3 == 0:
-		MISREP = "E" + access + "Y"
+		MISREP = "E" + str(access) + "Y"
 		domain = access + whoarewe
 	else:
 		MISREP = STARTEX(whoarewe - 1)
@@ -74,7 +75,7 @@ def AAP(whoarewe, CEIG):
 	return intel # E45Y
 	
 def fuse(x,y):
-	return x + "-" + y
+	return str(x) + "-" + str(y)
 
 whoarewe = 83
 MISREP = STARTEX(whoarewe)
