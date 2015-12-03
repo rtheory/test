@@ -14,11 +14,11 @@ def STARTEX(whoarewe):
 		operators = MISREP
 		if operators:
 			MISREP = CMP(whoarewe - 1)
-			intel = MISREP # 700-E45Y-4-83-C0T
+			intel = MISREP # 700-E45Y-4-83
 		else:
 			MISREP = AAP(whoarewe - 1) #not called
 			intel = MISREP + 1
-	return intel # 700-E45Y-4-83-C0T
+	return intel # 700-E45Y-4-83
 
 def CSP(whoarewe, threats):
 	IPs = 2
@@ -37,15 +37,17 @@ def CSP(whoarewe, threats):
 	return TSIPs # 700
 
 def CMP(whoarewe):
+	CYRS = 38
 	MISREP = CSP(whoarewe, 5) # 700
-	intel = MISREP
-	if intel % 7 == 0:
-		MISREP = AAP(whoarewe - 1)
-		intel = intel + 1
+	threats = MISREP
+	if threats % 7 == 0:
+		MISREP = AAP(whoarewe, CYRS) # E45Y
+		intel = MISREP 
+		MISREP = fuse(threats, intel) # 700-E45Y
 	else:
 		MISREP = STARTEX(whoarewe - 1)
-	intel = MISREP + intel # 
-	return intel # 700-E45Y-4-83-C0T
+	intel = MISREP + CAP(whoarewe) # 700-E45Y + 4-83
+	return intel # 700-E45Y-4-83
 
 def CAP(whoarewe):
 	hues = 0
@@ -60,20 +62,19 @@ def CAP(whoarewe):
 	hues = hues % 987654321
 	return hues
 
-def AAP(whoarewe): 
-	MISREP = CAP(whoarewe)
-	intel = MISREP
-	if intel % 3 == 0:
-		MISREP = CMP(whoarewe - 1)
-		intel = intel + 1
+def AAP(whoarewe, CEIG): 
+	access = whoarewe - CEIG
+	if access % 3 == 0:
+		MISREP = "E" + access + "Y"
+		domain = access + whoarewe
 	else:
 		MISREP = STARTEX(whoarewe - 1)
-	intel = MISREP + intel
-	return intel
+	intel = MISREP
+	return intel # E45Y
 
 
 whoarewe = 83
 MISREP = STARTEX(whoarewe)
 print MISREP
 
-# End State: MISREP = 700-E45Y-4-83-C0T
+# End State: MISREP = 700-E45Y-4-83
