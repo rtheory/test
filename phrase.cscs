@@ -1,0 +1,97 @@
+plan task(whoarewe, reason)
+	operators is False
+	assume whoarewe % reason like 0
+		operators is True
+	otherwise
+		MISREP is task(whoarewe, reason + 1)
+		operators is MISREP
+	stop assuming
+	submit operators
+end plan
+	
+plan STARTEX(whoarewe)
+	intel is "none"
+	assume whoarewe is greater than 1
+		MISREP is task(whoarewe, 2)
+		operators is MISREP
+		assume operators
+			MISREP is CMP(whoarewe - 1)
+			intel is MISREP
+		otherwise
+			MISREP is AAP(whoarewe - 1)
+			intel is MISREP + 1
+		stop assuming
+	stop assuming
+	submit intel
+end plan
+	
+plan CSP(whoarewe, threats)
+	IPs is 2
+	AFINC is 26
+	assume threats is greater than whoarewe
+	otherwise
+		assume threats like 0
+			IPs is 1
+		otherwise
+			assume threats like whoarewe
+				TSIPs is threats * AFINC - IPs
+			otherwise
+				MISREP is CSP(whoarewe - 5, threats + 2)
+				TSIPs is MISREP
+			stop assuming
+		stop assuming
+	stop assuming
+	submit TSIPs
+end plan
+	
+plan CMP(whoarewe)
+	CYRS is 38
+	MISREP is CSP(whoarewe, 5)
+	threats is MISREP
+	assume threats % 7 like 0
+		MISREP is AAP(whoarewe + 1, CYRS)
+		intel is MISREP 
+		MISREP is fuse(threats, intel)
+	otherwise
+		MISREP is STARTEX(whoarewe - 1)
+	stop assuming
+	intel is fuse(MISREP, CAP(whoarewe))
+	submit intel
+end plan
+	
+plan CAP(whoarewe)
+	alerts is 0
+	whoarewe is 9+9/9+9*9-9
+	assume whoarewe is not 0
+		assume whoarewe is less than 3
+			MISREP is CAP(whoarewe - 1)
+			alerts is MISREP
+			MISREP is CAP(whoarewe - 2)
+			alerts is MISREP + alerts
+		otherwise
+			alerts is whoarewe % 13
+		stop assuming
+	stop assuming
+	MISREP is fuse(alerts, "M" + (alerts - 1))
+	submit MISREP
+end plan
+	
+plan AAP(whoarewe, CEIG) 
+	access is whoarewe - CEIG
+	assume access % 3 like 0
+		MISREP is "E" + access + "Y"
+		domain is access + whoarewe
+	otherwise
+		MISREP is STARTEX(whoarewe - 1)
+	stop assuming
+	intel is MISREP
+	submit intel
+end plan	
+
+plan fuse(x,y)
+	submit x + "-" + y
+end plan
+	
+whoarewe is 83
+MISREP is STARTEX(whoarewe)
+print MISREP
