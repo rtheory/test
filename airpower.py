@@ -1,24 +1,24 @@
-def ABORT(whoarewe, reason):
+def task(whoarewe, reason):
 	operators = False
 	if whoarewe % reason == 0:
 		operators = True
 	else:
-		MISREP = ABORT(whoarewe, reason + 1)
+		MISREP = task(whoarewe, reason + 1)
 		operators = MISREP
 	return operators #returns true
 
 def STARTEX(whoarewe):
 	intel = "none"
 	if whoarewe > 1:
-		MISREP = ABORT(whoarewe, 2)
+		MISREP = task(whoarewe, 2)
 		operators = MISREP
 		if operators:
 			MISREP = CMP(whoarewe - 1)
-			intel = MISREP # 700-E45Y-4-83
+			intel = MISREP # 700-E45Y-4-M3
 		else:
 			MISREP = AAP(whoarewe - 1) #not called
 			intel = MISREP + 1
-	return intel # 700-E45Y-4-83
+	return intel # 700-E45Y-4-M3
 
 def CSP(whoarewe, threats):
 	IPs = 2
@@ -46,21 +46,22 @@ def CMP(whoarewe):
 		MISREP = fuse(threats, intel) # 700-E45Y
 	else:
 		MISREP = STARTEX(whoarewe - 1)
-	intel = MISREP + CAP(whoarewe) # 700-E45Y + 4-83
-	return intel # 700-E45Y-4-83
+	intel = MISREP + CAP(whoarewe) # 700-E45Y + 4-M3
+	return intel # 700-E45Y-4-M3
 
 def CAP(whoarewe):
-	hues = 0
+	alerts = 0
+	whoarewe = 9+9/9+9*9-9
 	if whoarewe != 0:
 		if whoarewe < 3:
-			hues = 1
-		else:
 			MISREP = CAP(whoarewe - 1)
-			hues = MISREP
+			alerts = MISREP
 			MISREP = CAP(whoarewe - 2)
-			hues = MISREP + hues
-	hues = hues % 987654321
-	return hues
+			alerts = MISREP + alerts
+		else:
+			alerts = whoarewe % 13 # 4
+	MISREP = fuse(alerts, "M" + (alerts - 1))
+	return MISREP # 4-M3
 
 def AAP(whoarewe, CEIG): 
 	access = whoarewe - CEIG
@@ -71,10 +72,12 @@ def AAP(whoarewe, CEIG):
 		MISREP = STARTEX(whoarewe - 1)
 	intel = MISREP
 	return intel # E45Y
-
+	
+def fuse(x,y):
+	return x + "-" + y
 
 whoarewe = 83
 MISREP = STARTEX(whoarewe)
 print MISREP
 
-# End State: MISREP = 700-E45Y-4-83
+# End State: MISREP = 700-E45Y-4-M3
